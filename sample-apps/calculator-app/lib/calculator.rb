@@ -1,4 +1,4 @@
-require_relative "calculable"
+require_relative 'calculable'
 
 class Calculator
   include Calculable
@@ -14,32 +14,29 @@ class Calculator
     @input.content
   end
 
-  def input= input
+  def input=(input)
     @input.content = input
   end
 
   def calculate
+    return 0 if input.empty?
     perform_calculation
   end
 
   private
 
   def perform_calculation
-    return 0 if input.empty?
-
     OPERATIONS.each do |operation|
       op_regexp       = Regexp.escape(operation)
       operable_regexp = /#{OPERAND_REGEXP}#{op_regexp}#{OPERAND_REGEXP}/
 
-      while input.match(/#{op_regexp}/)
-        break unless input.match(operable_regexp)
+      while input.match(op_regexp) && input.match(operable_regexp)
         input.gsub!(operable_regexp) do |matching|
-          matching = matching.split(/#{op_regexp}/).map(&:to_f).inject(operation)
+          matching.split(/#{op_regexp}/).map(&:to_f).inject(operation)
         end
       end
-
     end
 
-    input.include?("Infinity") ? "Infinity" : input.to_f
+    input.include?('Infinity') ? 'Infinity' : input.to_f
   end
 end
