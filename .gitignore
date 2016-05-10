@@ -1,0 +1,7 @@
+.DS_Store
+Gemfile.lock
+doc/
+rdoc
+test/tmp
+test/version_tmp
+tmp
